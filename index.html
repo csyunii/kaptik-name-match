@@ -1,0 +1,122 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kaptik 이름궁합 - Bang Chan</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#fff4f6;font-family:Pretendard,"Malgun Gothic",sans-serif;color:#222}
+.w{max-width:480px;margin:0 auto;padding:24px 16px 60px}
+h1{text-align:center;font-size:34px;margin:8px 0}.sub{text-align:center;color:#c2185b;font-weight:700;font-size:13px}
+.p{text-align:center;color:#666;font-size:14px;margin-bottom:18px}
+.card{background:#fff;border-radius:24px;padding:20px;box-shadow:0 4px 20px #f8bbd033}
+label{font-size:13px;color:#555;font-weight:700}
+input{width:100%;padding:14px;border:2px solid #f8bbd0;border-radius:14px;font-size:18px;text-align:center;margin:6px 0 12px;outline:none}
+button{cursor:pointer;border:0;border-radius:16px;padding:15px;font-size:17px;font-weight:800;width:100%;background:#d02a62;color:#fff}
+.row{display:flex;gap:6px;justify-content:center;margin:4px 0}.c{min-width:34px;height:34px;border-radius:10px;background:#fce4ec;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;padding:0 4px}
+.c.b{background:#ede7f6}.n{background:#fff0f3;animation:pop .3s}.q{border:2px dashed #d02a62;background:#fff;color:#d02a62}
+@keyframes pop{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+.heart{text-align:center;font-size:56px;font-weight:900;color:#d02a62;margin:8px 0}
+.chat{margin-top:16px}.m{display:flex;gap:8px;margin:10px 0;animation:pop .35s}.av{width:38px;height:38px;border-radius:50%;background:#333;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;flex:none}
+.bub{background:#fff;border-radius:4px 18px 18px 18px;padding:11px 14px;box-shadow:0 2px 8px #0001;font-size:15px;line-height:1.5}
+.me{justify-content:flex-end}.me .bub{background:#d02a62;color:#fff;border-radius:18px 4px 18px 18px}
+.lock{filter:blur(5px);user-select:none}
+.reply{display:flex;gap:8px;margin-top:14px}.reply input{margin:0;text-align:left;font-size:15px;flex:1}.reply button{width:70px;padding:0}
+.cta{display:block;text-align:center;text-decoration:none;background:#111;color:#fff;border-radius:16px;padding:16px;font-weight:800;margin-top:14px}
+.hid{display:none}.small{font-size:12px;color:#888;text-align:center;margin-top:8px}
+</style></head><body><div class="w">
+<div class="sub">TO BANG CHAN</div><h1>이름궁합</h1><div class="p">영어 이름을 넣으면 한글로 바꿔서<br>방찬과의 궁합을 봐줘요</div>
+<div class="card" id="f">
+<label>My name (English)</label><input id="en" placeholder="e.g. Soyun" autocomplete="off">
+<label>한글 이름 (틀리면 직접 고쳐요)</label><input id="ko" placeholder="소윤">
+<button id="go">궁합 보기</button></div>
+<div class="card hid" id="r"><div style="text-align:center;font-size:20px"><b id="a"></b> ♥ <b>방찬</b></div>
+<div class="heart" id="pc">??%</div><div id="tb"></div></div>
+<div class="chat hid" id="chat"></div>
+<div class="reply hid" id="rp"><input id="txt" placeholder="답장 쓰기..."><button id="snd">전송</button></div>
+<div id="end"></div>
+</div>
+<script>
+const KAPTIK_URL='https://www.instagram.com/kaptik_official/';
+const CH=['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+const VO=['ㅏ','ㅐ','ㅑ','ㅒ','ㅓ','ㅔ','ㅕ','ㅖ','ㅗ','ㅘ','ㅙ','ㅚ','ㅛ','ㅜ','ㅝ','ㅞ','ㅟ','ㅠ','ㅡ','ㅢ','ㅣ'];
+const JO=['','ㄱ','ㄲ','ㄳ','ㄴ','ㄵ','ㄶ','ㄷ','ㄹ','ㄺ','ㄻ','ㄼ','ㄽ','ㄾ','ㄿ','ㅀ','ㅁ','ㅂ','ㅄ','ㅅ','ㅆ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+const ST={'ㄱ':2,'ㄲ':4,'ㄴ':2,'ㄷ':3,'ㄸ':6,'ㄹ':5,'ㅁ':4,'ㅂ':4,'ㅃ':8,'ㅅ':2,'ㅆ':4,'ㅇ':1,'ㅈ':3,'ㅉ':6,'ㅊ':4,'ㅋ':3,'ㅌ':4,'ㅍ':4,'ㅎ':3,
+'ㅏ':2,'ㅐ':3,'ㅑ':3,'ㅒ':4,'ㅓ':2,'ㅔ':3,'ㅕ':3,'ㅖ':4,'ㅗ':2,'ㅘ':4,'ㅙ':5,'ㅚ':3,'ㅛ':3,'ㅜ':2,'ㅝ':4,'ㅞ':5,'ㅟ':3,'ㅠ':3,'ㅡ':1,'ㅢ':2,'ㅣ':1,
+'ㄳ':4,'ㄵ':5,'ㄶ':5,'ㄺ':7,'ㄻ':9,'ㄼ':9,'ㄽ':7,'ㄾ':9,'ㄿ':9,'ㅀ':8,'ㅄ':6};
+const SPLIT={'ㄳ':'ㄱㅅ','ㄵ':'ㄴㅈ','ㄶ':'ㄴㅎ','ㄺ':'ㄹㄱ','ㄻ':'ㄹㅁ','ㄼ':'ㄹㅂ','ㄽ':'ㄹㅅ','ㄾ':'ㄹㅌ','ㄿ':'ㄹㅍ','ㅀ':'ㄹㅎ','ㅄ':'ㅂㅅ'};
+const DV={'ㅘ':'ㅗㅏ','ㅙ':'ㅗㅐ','ㅚ':'ㅗㅣ','ㅝ':'ㅜㅓ','ㅞ':'ㅜㅔ','ㅟ':'ㅜㅣ','ㅢ':'ㅡㅣ'};
+// 영어 -> 한글
+const VT=[['woo','ㅜ'],['wu','ㅜ'],['yeo','ㅕ'],['yae','ㅒ'],['eo','ㅓ'],['eu','ㅡ'],['ae','ㅐ'],['ya','ㅑ'],['yo','ㅛ'],['yu','ㅠ'],['ye','ㅖ'],['wa','ㅘ'],['wo','ㅝ'],['we','ㅞ'],['wi','ㅟ'],['oo','ㅜ'],['ee','ㅣ'],['ui','ㅢ'],['ay','ㅔ'],['ey','ㅔ'],['ie','ㅣ'],['ea','ㅣ'],['ou','ㅜ'],['a','ㅏ'],['e','ㅔ'],['i','ㅣ'],['o','ㅗ'],['u','ㅜ'],['y','ㅣ']];
+const CT=[['ng','ㅇ'],['ch','ㅊ'],['sh','ㅅ'],['th','ㅅ'],['ph','ㅍ'],['kh','ㅋ'],['ck','ㅋ'],['gg','ㄱ'],['ss','ㅅ'],['tt','ㅅ'],['nn','ㄴ'],['mm','ㅁ'],['b','ㅂ'],['c','ㅋ'],['d','ㄷ'],['f','ㅍ'],['g','ㄱ'],['h','ㅎ'],['j','ㅈ'],['k','ㅋ'],['l','ㄹ'],['m','ㅁ'],['n','ㄴ'],['p','ㅍ'],['q','ㅋ'],['r','ㄹ'],['s','ㅅ'],['t','ㅌ'],['v','ㅂ'],['w','ㅇ'],['x','ㅋ'],['z','ㅈ']];
+const CODA=['ㄱ','ㄴ','ㄹ','ㅁ','ㅂ','ㅇ'];
+function comp(o,v,c){return String.fromCharCode(0xAC00+(CH.indexOf(o)*21+VO.indexOf(v))*28+(c?JO.indexOf(c):0))}
+function toHangul(s){
+ s=s.toLowerCase().replace(/[^a-z]/g,'').replace(/oung/g,'eong').replace(/hyun/g,'hyeon').replace(/(?<=[aeiouy])h(?![aeiouy])/g,'').replace(/(?<=[aeiou])r(?![aeiouy])/g,'').replace(/(?<=[aeiouy])l(?=[aeiouy])/g,'ll');let t=[],i=0;
+ while(i<s.length){let m=null;
+  for(const [k,v] of VT){if(s.startsWith(k,i)){m=['v',v,k.length,k[0]==='w'];break}}
+  if(!m)for(const [k,v] of CT){if(s.startsWith(k,i)){m=['c',v,k.length];break}}
+  if(!m){i++;continue}t.push([m[0],m[1],m[3]]);i+=m[2]}
+ let out='',k=0;
+ while(k<t.length){
+  let o='ㅇ',v;
+  if(t[k][0]==='c'){
+   if(k+1<t.length&&t[k+1][0]==='v'){o=t[k][1];v=t[k+1][1];k+=2}
+   else{o=t[k][1];v='ㅡ';k+=1;out+=comp(o,v);continue}
+  }else{v=t[k][1];k++}
+  let c='';
+  if(k<t.length&&t[k][0]==='c'&&!(k+1<t.length&&t[k+1][0]==='v'&&!t[k+1][2])){
+   if(CODA.includes(t[k][1])){c=t[k][1];k++}
+  }
+  out+=comp(o,v,c);
+ }
+ return out;
+}
+function jamo(name){let r=[];for(const ch of name){const n=ch.charCodeAt(0)-0xAC00;if(n<0||n>11171)continue;
+ const o=CH[Math.floor(n/588)],v=VO[Math.floor(n%588/28)],c=JO[n%28];
+ r.push(o);for(const x of (DV[v]||v))r.push(x);if(c)for(const x of (SPLIT[c]||c))r.push(x)}
+ return r}
+// 계산
+function calc(a,b){
+ const A=jamo(a),B=jamo(b),L=Math.max(A.length,B.length);
+ let row=[];for(let i=0;i<L;i++)row.push(((A[i]?ST[A[i]]:0)+(B[i]?ST[B[i]]:0))%10);
+ const rows=[row];while(row.length>2){let n=[];for(let i=0;i<row.length-1;i++)n.push((row[i]+row[i+1])%10);rows.push(n);row=n}
+ return {A,B,L,rows,pct:row.length==2?row[0]*10+row[1]:row[0]}}
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+$('en').oninput=()=>{$('ko').value=toHangul($('en').value)};
+function say(who,html,cls){const d=document.createElement('div');d.className='m '+(who=='me'?'me':'');
+ d.innerHTML=(who=='me'?'':'<div class="av">Chan</div>')+'<div class="bub '+(cls||'')+'">'+html+'</div>';$('chat').appendChild(d);d.scrollIntoView({behavior:'smooth',block:'center'})}
+function line(p){
+ if(p>=90)return `우리 궁합이 ${p}%네? 이거 거의 운명인데... 솔직히 좀 설렌다`;
+ if(p>=70)return `우리 궁합이 ${p}%네? 나쁘지 않은데? 아니 꽤 좋은데?`;
+ if(p>=40)return `우리 궁합이 ${p}%네? 반반인데... 그래서 더 알아가고 싶어지는 거 알아?`;
+ return `우리 궁합이 ${p}%네? 낮다고 실망하지 마, 나 원래 어려운 게 더 끌려`}
+let busy=false;
+$('go').onclick=async()=>{
+ if(busy)return;let ko=$('ko').value.trim();if(!ko&&$('en').value)ko=toHangul($('en').value);
+ if(!/^[가-힣]{1,4}$/.test(ko)){alert('한글 1~4자로 입력해줘요 (영어를 쓰면 자동 변환돼요)');return}
+ busy=true;const R=calc(ko,'방찬');$('f').classList.add('hid');$('r').classList.remove('hid');$('chat').classList.remove('hid');
+ $('a').textContent=ko;
+ const tb=$('tb');tb.innerHTML='';
+ say('c','"너의 이름 궁합을 봐라." 잠깐만, 내가 계산해볼게');await sleep(1200);
+ const mk=(arr,cls)=>{const d=document.createElement('div');d.className='row';arr.forEach(x=>{const e=document.createElement('div');e.className='c '+(cls||'');e.textContent=x;d.appendChild(e)});tb.appendChild(d);return d};
+ mk(R.A.concat(Array(R.L-R.A.length).fill('')));mk(R.B.concat(Array(R.L-R.B.length).fill('')),'b');
+ await sleep(500);
+ for(const r of R.rows){mk(r,'n');await sleep(550)}
+ for(let i=0;i<=R.pct;i+=Math.ceil(R.pct/25)){$('pc').textContent=i+'%';await sleep(35)}
+ $('pc').textContent=R.pct+'%';
+ await sleep(500);say('c',line(R.pct));await sleep(1200);
+ say('c','근데 이 뒤에 하고 싶은 말이 있어... 너만 들어줘');
+ $('rp').classList.remove('hid');busy=false;
+};
+let replied=false;
+async function send(){
+ const v=$('txt').value.trim();if(!v||replied)return;replied=true;
+ say('me',v.replace(/</g,'&lt;'));$('txt').value='';$('rp').classList.add('hid');
+ await sleep(1200);
+ say('c','...그렇게 말하니까 더 가까이 가고 싶어지잖아. 오늘 밤은 너한테만 말해줄게','lock');
+ await sleep(900);
+ say('c','여기선 여기까지야. 나머지는 Kaptik에서 이어서 얘기하자');
+ $('end').innerHTML='<a class="cta" target="_blank" href="'+KAPTIK_URL+'">Kaptik에서 Bang Chan과 대화 이어가기</a><div class="small">이어지는 대화는 Kaptik 안에서만 볼 수 있어요</div>';
+ $('end').scrollIntoView({behavior:'smooth',block:'end'})}
+$('snd').onclick=send;$('txt').onkeydown=e=>{if(e.key==='Enter')send()};
+</script></body></html>
+
+
